@@ -1,6 +1,6 @@
 import React from "react";
 
-const Grid = () => {
+const Info = () => {
     return (
         <div>
 
@@ -8,4 +8,4 @@ const Grid = () => {
     )
 }
 
-export default Grid;
+export default Info;
