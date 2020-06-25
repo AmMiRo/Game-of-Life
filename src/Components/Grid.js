@@ -1,7 +1,7 @@
 import React from "react";
 import Cell from "./Cell.js";
 
-const Grid = ({ numCols, grid, setGrid }) => {
+const Grid = ({ numCols, grid, setGrid, running }) => {
   return (
     <div
       style={{
@@ -11,7 +11,9 @@ const Grid = ({ numCols, grid, setGrid }) => {
     >
       {grid.map((rows, i) =>
         rows.map((col, j) => {
-          return <Cell grid={grid} setGrid={setGrid} i={i} j={j} />;
+          return (
+            <Cell grid={grid} setGrid={setGrid} running={running} i={i} j={j} />
+          );
         })
       )}
     </div>
