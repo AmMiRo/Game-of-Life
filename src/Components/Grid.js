@@ -4,6 +4,7 @@ import Cell from "./Cell.js";
 const Grid = ({ numCols, grid, setGrid, running }) => {
   return (
     <div
+      className="grid"
       style={{
         display: "grid",
         gridTemplateColumns: `repeat(${numCols}, 16px)`,

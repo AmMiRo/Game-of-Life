@@ -18,7 +18,7 @@ const Cell = ({ i, j, grid, setGrid, running }) => {
       style={{
         width: 15,
         height: 15,
-        backgroundColor: grid[i][j] ? "gray" : undefined,
+        backgroundColor: grid[i][j] ? "LightGray" : undefined,
         border: "solid 1px black",
       }}
     />
