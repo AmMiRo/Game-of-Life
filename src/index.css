@@ -140,3 +140,7 @@ li {
 h2 {
   font-size: 1.2rem;
 }
+
+.loading {
+  margin: 10%;
+}

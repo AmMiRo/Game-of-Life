@@ -97,43 +97,47 @@ const Game = () => {
     setGrid(g2);
   };
 
-  // const jump = (e) => {
-  //   e.preventDefault();
-  //   const n = inputs.gen;
-  //   if (n < history.length - 1) {
-  //     const newArr = [];
-  //     for (let i = 0; i === n; i++) {
-  //       newArr.push(history[i]);
-  //     }
-  //     setHistory(newArr);
-  //   } else if (n > history.length) {
-  //     for (let i = history.length - 1; i === n; i++) {
-  //       const g = history[history.length - 1];
-  //       const g2 = JSON.parse(JSON.stringify(g));
+  const jump = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    let newHistory = JSON.parse(JSON.stringify(history));
+    const n = inputs.gen;
+    console.log(n);
+    if (n < newHistory.length - 1) {
+      for (let i = newHistory.length; i === n; i--) {
+        console.log(newHistory.length);
+        newHistory.pop();
+      }
+      console.log(newHistory.length);
+    } else if (n > newHistory.length) {
+      for (let i = newHistory.length; i === n + 1; i++) {
+        const g = newHistory[newHistory.length - 1];
+        const g2 = JSON.parse(JSON.stringify(g));
 
-  //       for (let i = 0; i < numRows; i++) {
-  //         for (let j = 0; j < numCols; j++) {
-  //           let numNeighbors = 0;
-  //           neighbors.forEach(([x, y]) => {
-  //             const newI = i + x;
-  //             const newJ = j + y;
-  //             if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
-  //               numNeighbors += g[newI][newJ];
-  //             }
-  //           });
-  //           if (numNeighbors < 2 || numNeighbors > 3) {
-  //             g2[i][j] = 0;
-  //           } else if (g[i][j] === 0 && numNeighbors === 3) {
-  //             g2[i][j] = 1;
-  //           }
-  //         }
-  //       }
-  //       setHistory([...history, g2]);
-  //     }
-  //   }
-  //   setGrid(history[n]);
-  //   setIsLoading(false);
-  // };
+        for (let i = 0; i < numRows; i++) {
+          for (let j = 0; j < numCols; j++) {
+            let numNeighbors = 0;
+            neighbors.forEach(([x, y]) => {
+              const newI = i + x;
+              const newJ = j + y;
+              if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
+                numNeighbors += g[newI][newJ];
+              }
+            });
+            if (numNeighbors < 2 || numNeighbors > 3) {
+              g2[i][j] = 0;
+            } else if (g[i][j] === 0 && numNeighbors === 3) {
+              g2[i][j] = 1;
+            }
+          }
+        }
+        newHistory.push(g2);
+      }
+    }
+    setHistory(newHistory);
+    setGrid(newHistory[newHistory.length - 1]);
+    setIsLoading(false);
+  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -153,7 +157,9 @@ const Game = () => {
   return (
     <>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <div className="large-container">
+          <h1 className="loading">Loading...</h1>
+        </div>
       ) : (
         <div className="large-container">
           <div className="small-container">
@@ -220,7 +226,7 @@ const Game = () => {
             >
               customize
             </button>
-            {/* <button
+            <button
               className={running ? "dead-buttons" : "active-buttons"}
               onClick={
                 running
@@ -232,9 +238,9 @@ const Game = () => {
               }
             >
               jump
-            </button> */}
+            </button>
           </div>
-          {/* {isJumping ? (
+          {isJumping ? (
             <form>
               <label>
                 Go to generation:
@@ -246,19 +252,13 @@ const Game = () => {
                   onChange={handleChange}
                 />
               </label>
-              <button
-                className="active-buttons"
-                onClick={() => {
-                  jump();
-                  setIsLoading(true);
-                }}
-              >
+              <button type="submit" className="active-buttons" onClick={jump}>
                 go
               </button>
             </form>
           ) : (
             ""
-          )} */}
+          )}
           {customize ? (
             <div className="customize-container">
               <form className="form-container" onSubmit={handleSubmit}>
